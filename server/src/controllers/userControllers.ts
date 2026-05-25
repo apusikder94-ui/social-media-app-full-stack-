@@ -96,6 +96,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
       httpOnly: true,
       sameSite: "none",
       secure: true, // production এ true
+      path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
     });
 
