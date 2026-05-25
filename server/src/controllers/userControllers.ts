@@ -94,7 +94,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
       secure: true, // production এ true
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
     });
@@ -321,7 +321,7 @@ export const bookmark = async (req: AuthRequest, res: Response) => {
       message: isBookmarking ? "removed" : "bookmarking",
       bookmarked: isBookmarking,
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const getSuggestedUsers = async (req: AuthRequest, res: Response) => {
