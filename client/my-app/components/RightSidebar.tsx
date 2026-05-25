@@ -19,12 +19,11 @@ import { toast } from "sonner";
 
 const RightSidebar = () => {
   const router = useRouter();
-  // ================= CURRENT USER =================
+
   const { data: currentUserData } = useGetProfileQuery();
   const currentUser = currentUserData?.user;
 
-
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
 
   const { data, isLoading, refetch } = useGetSuggestedUsersQuery();
 
@@ -32,14 +31,14 @@ const RightSidebar = () => {
 
   const users = data?.users || [];
 
-  // ================= SEARCH =================
+  // SEARCH
   const handleSearch = () => {
     if (!query.trim()) return;
 
-    router.push(`/social/search?i=${query}`);
+    router.push(`/social/search?i=${encodeURIComponent(query)}`);
   };
 
-  // ================= FOLLOW =================
+  // FOLLOW
   const handleFollow = async (id: string) => {
     try {
       const res = await followOrUnFollow({ id }).unwrap();
@@ -54,6 +53,7 @@ const RightSidebar = () => {
 
   return (
     <div className="space-y-6 pt-6">
+
       {/* SEARCH */}
       <div className="relative flex items-center gap-2">
         <div className="relative flex-1">
@@ -65,20 +65,13 @@ const RightSidebar = () => {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             className="pl-10 rounded-full py-5"
             placeholder="Search..."
           />
         </div>
 
-        <Button
-          onClick={handleSearch}
-          className="rounded-full"
-        >
+        <Button onClick={handleSearch} className="rounded-full">
           Search
         </Button>
       </div>
@@ -92,7 +85,7 @@ const RightSidebar = () => {
         ) : (
           users.map((user: any) => {
             const isFollowing =
-              currentUser?.following?.includes(user._id);
+              currentUser?.following?.includes(user._id) ?? false;
 
             return (
               <div

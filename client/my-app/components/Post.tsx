@@ -29,7 +29,7 @@ type PostFormData = {
 type Props = {
   open: boolean;
   setOpen: (value: boolean) => void;
-  post: any;
+  post?: any;
   refetch?: () => void;
 };
 
