@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://social-media-app-full-stack-mfpm.vercel.app/",
+    origin: "https://social-media-app-full-stack-mfpm.vercel.app",
     credentials: true,
   })
 );
